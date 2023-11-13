@@ -4,6 +4,7 @@ import com.ylan.listener.event.MyEvent;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.event.TransactionalEventListener;
 
 /**
  * @author by pepsi-wyl
@@ -22,5 +23,11 @@ public class MyAnnotationListener {
     @EventListener(classes = {MyEvent.class})
     public void listener(MyEvent event) {
         log.info("[MyAnnotationListener][注解监听器]事件触发:{}", event.getMsg());
+    }
+
+    // TransactionalEventListener可以选择在事务完成后才会被执行，事务执行失败就不会被执行。
+    @TransactionalEventListener
+    public void transactionalListener(MyEvent event) {
+        log.info("[transactionalListener][注解监听器]事件触发:{}", event.getMsg());
     }
 }
